@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+message Product {
+  uint64 id = 1;
+  uint64 spu_id = 2;
+  string sku_name = 3;
+  string sku_desc = 4;
+  double sku_price = 5;
+  double sku_member_price = 6;
+  string sku_unit = 7;
+  repeated string sku_images = 8;
+  string sku_detail = 9;
+  uint32 status = 10;
+  string created_at = 11;
+  string updated_at = 12;
+}
+
+message ProductSpec {
+  uint64 id = 1;
+  uint64 sku_id = 2;
+  uint64 spec_id = 3;
+  string spec_desc = 4;
+}
+
+message ProductStock {
+  uint64 id = 1;
+  uint64 sku_id = 2;
+  uint64 now_stock = 3;
+  uint64 freeze_stock = 4;
+  string created_at = 5;
+  string updated_at = 6;
+}
