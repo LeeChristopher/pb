@@ -1,6 +1,18 @@
 syntax = "proto3";
 
-message Product {
+package product;
+
+option go_package = "github.com/LeeChristopher/pb/product";
+
+message ProductListReq {
+  uint64 id = 1;
+  uint64 sku_id = 2;
+  string sku_name = 3;
+  uint32 status = 4;
+  uint32 now_page = 5;
+}
+
+message ProductRsp {
   uint64 id = 1;
   uint64 spu_id = 2;
   string sku_name = 3;
@@ -15,18 +27,22 @@ message Product {
   string updated_at = 12;
 }
 
-message ProductSpec {
+message ProductSpecRsp {
   uint64 id = 1;
   uint64 sku_id = 2;
   uint64 spec_id = 3;
   string spec_desc = 4;
 }
 
-message ProductStock {
+message ProductStockRsp {
   uint64 id = 1;
   uint64 sku_id = 2;
   uint64 now_stock = 3;
   uint64 freeze_stock = 4;
   string created_at = 5;
   string updated_at = 6;
+}
+
+service Product {
+  rpc GetProductList(ProductListReq) returns(ProductRsp);
 }
