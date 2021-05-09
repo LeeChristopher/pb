@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package base;
+
+option go_package = "github.com/LeeChristopher/pb/base";
+
+message CliBaseRsp {
+  uint64 code = 1;
+  string message = 2;
+  double runtime = 3;
+}

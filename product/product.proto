@@ -2,7 +2,17 @@ syntax = "proto3";
 
 package product;
 
+import "base/base.proto";
+
 option go_package = "github.com/LeeChristopher/pb/product";
+
+service Product {
+  rpc GetProductList(ProductListReq) returns(ProductListRsp);
+  rpc GetProductStock(ProductStockReq) returns(ProductStockRsp);
+  rpc AddProduct(ProductAddReq) returns(base.CliBaseRsp);
+  rpc EditProduct(ProductEditReq) returns(base.CliBaseRsp);
+  rpc EditProductStatus(ProductStatusReq) returns(base.CliBaseRsp);
+}
 
 message ProductListReq {
   uint64 id = 1;
@@ -10,9 +20,27 @@ message ProductListReq {
   string sku_name = 3;
   uint32 status = 4;
   uint32 now_page = 5;
+  string trace_id = 6;
 }
 
-message ProductRsp {
+message ProductSpec {
+  uint64 id = 1;
+  uint64 sku_id = 2;
+  uint64 spec_id = 3;
+  string spec_name = 4;
+  string spec_desc = 5;
+}
+
+message ProductStock {
+  uint64 id = 1;
+  uint64 sku_id = 2;
+  uint64 now_stock = 3;
+  uint64 freeze_stock = 4;
+  string created_at = 5;
+  string updated_at = 6;
+}
+
+message ProductInfo {
   uint64 id = 1;
   uint64 spu_id = 2;
   string sku_name = 3;
@@ -22,27 +50,49 @@ message ProductRsp {
   string sku_unit = 7;
   repeated string sku_images = 8;
   string sku_detail = 9;
-  uint32 status = 10;
-  string created_at = 11;
-  string updated_at = 12;
+  repeated ProductSpec sku_spec = 10;
+  repeated ProductStock sku_stock = 11;
+  uint32 status = 12;
+  string created_at = 13;
+  string updated_at = 14;
 }
 
-message ProductSpecRsp {
-  uint64 id = 1;
-  uint64 sku_id = 2;
-  uint64 spec_id = 3;
-  string spec_desc = 4;
+message ProductListRsp {
+  uint64 code = 1;
+  string message = 2;
+  double runtime = 3;
+  repeated ProductInfo data = 4;
+}
+
+message ProductAddReq {
+  string spu = 1;
+  repeated ProductInfo skus = 2;
+  string trace_id = 3;
+}
+
+message ProductEditReq {
+  string spu = 1;
+  repeated ProductInfo skus = 2;
+  string trace_id = 3;
+}
+
+message ProductStatusReq {
+  repeated uint64 id = 1;
+  repeated uint64 spu_id = 2;
+  repeated uint64 sku_id = 3;
+  uint32 status = 4;
+  string trace_id = 5;
+}
+
+message ProductStockReq {
+  repeated uint64 id = 1;
+  repeated uint64 sku_id = 2;
+  string trace_id = 3;
 }
 
 message ProductStockRsp {
-  uint64 id = 1;
-  uint64 sku_id = 2;
-  uint64 now_stock = 3;
-  uint64 freeze_stock = 4;
-  string created_at = 5;
-  string updated_at = 6;
-}
-
-service Product {
-  rpc GetProductList(ProductListReq) returns(ProductRsp);
+  uint64 code = 1;
+  string message = 2;
+  double runtime = 3;
+  repeated ProductStock stocks = 4;
 }
