@@ -15,12 +15,13 @@ service Product {
 }
 
 message ProductListReq {
-  uint64 id = 1;
-  uint64 sku_id = 2;
+  repeated uint64 id = 1;
+  repeated uint64 sku_id = 2;
   string sku_name = 3;
   uint32 status = 4;
   uint32 now_page = 5;
-  string trace_id = 6;
+  uint32 limit = 6;
+  string trace_id = 7;
 }
 
 message ProductSpec {
